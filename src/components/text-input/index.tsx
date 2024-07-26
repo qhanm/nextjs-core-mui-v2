@@ -8,13 +8,13 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => {
       lineHeight: 1.2,
       position: 'relative',
       marginBottom: theme.spacing(1),
-      fontSize: theme.typography.body2.fontSize,
-      border: 'none'
+      fontSize: '1rem',
+      border: 'none',
+      color: theme.palette.text.primary
     },
-
     '& .MuiInputBase-root': {
       height: '40px',
-      border: `1px solid ${theme.palette.success.main}`,
+      border: `1px solid ${theme.palette.primary.main}`,
       borderRadius: 8
     },
     '& .MuiInputBase-input': {

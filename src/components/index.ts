@@ -1,5 +1,5 @@
 import TextInput from './text-input'
-
-const CoreComponent = { TextInput }
+import Checkbox from './checkbox'
+const CoreComponent = { TextInput, Checkbox }
 
 export default CoreComponent
