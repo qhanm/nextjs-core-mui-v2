@@ -1,33 +1,42 @@
-import TextInput from "components/text-input";
-import { Control, Controller } from "react-hook-form";
+import { InputProps, TextFieldProps } from '@mui/material'
+import TextInput from 'components/text-input'
+import { Control, Controller, FieldErrors, FieldPath, RegisterOptions } from 'react-hook-form'
+import { string } from 'yup'
 
-type TFormInputProps = {
-  name: string;
-  control: Control<any>;
-  label: string;
-  setValue: any
+type TFormInputProps<TFieldValues> = {
+  name: string
+  control: Control<any>
+  label: string
+  errors?: FieldErrors<TFieldValues>
+  rules?: Omit<
+    RegisterOptions<TFieldValues, FieldPath<TFieldValues>>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >
+  inputProps?: TextFieldProps
 }
 
-export default function FormInputText(props: TFormInputProps) {
-  const {name, control, label, setValue} = props
-  return <Controller
-    name={name}
-    control={control}
-    render={({
-      field: { onChange, value },
-      fieldState: { error },
-      formState,
-    }) => (
-      <TextInput
-        helperText={error ? error.message : null}
-        size="small"
-        error={!!error}
-        onChange={onChange}
-        value={value}
-        fullWidth
-        label={label}
-        variant="outlined"
-      />
-    )}
-  />
+export default function FormInputText<TFieldValues>(props: TFormInputProps<TFieldValues>) {
+  const { name, control, label, rules, inputProps = { margin: 'normal' } } = props
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      render={({ field: { onChange, value }, fieldState: { error } }) => {
+        return (
+          <TextInput
+            id={name}
+            helperText={error ? error.message : null}
+            size='small'
+            error={!!error}
+            onChange={onChange}
+            value={value}
+            fullWidth
+            label={label}
+            {...inputProps}
+          />
+        )
+      }}
+    />
+  )
 }

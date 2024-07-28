@@ -25,6 +25,13 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => {
       '&:before, &:after, :hover:not(.Mui-disabled, .Mui-error):before': {
         border: 'none'
       }
+    },
+    '& .MuiFormHelperText-root': {
+      marginLeft: '0px',
+      color: theme.palette.error.main
+    },
+    '& .Mui-error': {
+      borderColor: theme.palette.error.main
     }
   }
 })

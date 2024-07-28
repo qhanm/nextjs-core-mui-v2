@@ -2,7 +2,7 @@ import COMMON from 'configs/common'
 import ClientLayout from 'layouts/client'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { getDictionary } from './about/dictionaries'
+import { getDictionary } from './dictionaries'
 
 export default async function Home({ params }) {
   async function changeTheme(formData: FormData) {

@@ -1,9 +1,11 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { Avatar, Box, Button, Checkbox, FormControlLabel, Grid, Link, Paper, Typography } from '@mui/material'
-import CoreComponent from 'components'
+import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material'
+import { getDictionary } from 'app/[lang]/dictionaries'
 import AuthLayout from 'layouts/auth'
+import SignUpForm from 'views/auth/sign-up-form'
 
-export default function SignIn() {
+export default async function SignIn({ params: { lang } }) {
+  const dictionary = await getDictionary(lang)
   return (
     <AuthLayout>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -23,10 +25,11 @@ export default function SignIn() {
           <Typography component='h1' variant='h5'>
             Sign up
           </Typography>
-          <Box component='form' noValidate sx={{ mt: 1 }}>
-            <CoreComponent.TextInput id='name' label='Fullname' margin='normal' required />
+          <Box sx={{ mt: 1 }}>
+            <SignUpForm dictionary={dictionary.signUp.form} />
+            {/* <CoreComponent.TextInput id='name' label='Fullname' margin='normal' required />
             <CoreComponent.TextInput id='email' label='Email' margin='normal' required />
-            <Grid container spacing={{md: 2, xs: 0}}>
+            <Grid container spacing={{ md: 2, xs: 0 }}>
               <Grid item xs={12} md={6}>
                 <CoreComponent.TextInput id='password' label='Password' margin='normal' required />
               </Grid>
@@ -36,11 +39,11 @@ export default function SignIn() {
             </Grid>
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
               Sign Up
-            </Button>
+            </Button> */}
             <Grid container>
               <Grid item>
                 <Link href='/auth/sign-in' variant='body2'>
-                  {"Sign In"}
+                  {'Do you already have an account?'}
                 </Link>
               </Grid>
             </Grid>

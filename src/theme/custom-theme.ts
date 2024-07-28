@@ -44,7 +44,7 @@ export const createCustomTheme = (mode: ITheme) => {
         main: colors.primary
       },
       secondary: { main: colors.secondary },
-      error: { main: colors.secondary },
+      error: { main: colors.error },
       warning: { main: colors.secondary },
       info: { main: colors.secondary },
       success: { main: colors.secondary },

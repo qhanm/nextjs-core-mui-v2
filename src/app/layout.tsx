@@ -20,6 +20,7 @@ import { ITheme } from 'types/common'
 
 import CookieHelper from 'helpers/cookie'
 import ThemeComponent from 'theme'
+import COMMON from 'configs/common'
 
 const roboto = Roboto({
   weight: '400',
@@ -38,6 +39,7 @@ export async function generateStaticParams() {
 
 export type TRootSetting = {
   theme: ITheme
+  language: 'vi' | 'en'
 }
 
 export default function RootLayout({
@@ -48,7 +50,8 @@ export default function RootLayout({
   params: any
 }>) {
   let setting: TRootSetting = {
-    theme: CookieHelper.getTheme()
+    theme: CookieHelper.getTheme(),
+    language: params?.lang ?? COMMON.LANGUAGE.VI
   }
 
   return (
