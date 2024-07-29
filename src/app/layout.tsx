@@ -22,6 +22,9 @@ import CookieHelper from 'helpers/cookie'
 import ThemeComponent from 'theme'
 import COMMON from 'configs/common'
 
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
+
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
@@ -42,13 +45,16 @@ export type TRootSetting = {
   language: 'vi' | 'en'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params
 }: Readonly<{
   children: React.ReactNode
   params: any
 }>) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+
   let setting: TRootSetting = {
     theme: CookieHelper.getTheme(),
     language: params?.lang ?? COMMON.LANGUAGE.VI
@@ -57,17 +63,19 @@ export default function RootLayout({
   return (
     <html lang={params.lang} className={roboto.className}>
       <body style={{ margin: 0, padding: 0 }}>
-        <AppRouterCacheProvider options={{ key: 'css' }}>
-          <LoaderWrapper>
-            <AxiosInterceptor>
-              <SettingProvider setting={setting}>
-                <ThemeComponent>
-                  <Suspense fallback={<>loading</>}>{children}</Suspense>
-                </ThemeComponent>
-              </SettingProvider>
-            </AxiosInterceptor>
-          </LoaderWrapper>
-        </AppRouterCacheProvider>
+        <NextIntlClientProvider messages={messages}>
+          <AppRouterCacheProvider options={{ key: 'css' }}>
+            <LoaderWrapper>
+              <AxiosInterceptor>
+                <SettingProvider setting={setting}>
+                  <ThemeComponent>
+                    <Suspense fallback={<>loading</>}>{children}</Suspense>
+                  </ThemeComponent>
+                </SettingProvider>
+              </AxiosInterceptor>
+            </LoaderWrapper>
+          </AppRouterCacheProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )
