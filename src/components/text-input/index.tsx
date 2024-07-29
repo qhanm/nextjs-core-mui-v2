@@ -15,15 +15,24 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => {
     '& .MuiInputBase-root': {
       height: '40px',
       border: `1px solid ${theme.palette.primary.main}`,
-      borderRadius: 8
+      borderRadius: 8,
+
+      '& input[type="password"]': {
+        padding: '4px 8px 0px 8px'
+      }
     },
     '& .MuiInputBase-input': {
       padding: '0px 8px'
     },
     '& .MuiFilledInput-root': {
       backgroundColor: 'white',
+
       '&:before, &:after, :hover:not(.Mui-disabled, .Mui-error):before': {
         border: 'none'
+      },
+
+      '&:hover': {
+        backgroundColor: 'transparent'
       }
     },
     '& .MuiFormHelperText-root': {

@@ -2,31 +2,33 @@
   "common": {
     "validation": {
       "required": "{name} Không được bỏ trống",
-      "must-email": "{name} phải là email"
+      "mustEmail": "Email không đúng định dạnh",
+      "passwordInvalid": "Mật khẩu phải có ít nhất 1 chữ hoa, chữ thường, số, ký tự đặc biệt và dài ít nhất 6 ký tự",
+      "passwordNotMatch": "Nhập lại khẩu không chính xác"
     }
   },
   "home": {
     "title": "Home page"
   },
-  "sign-up": {
+  "signUp": {
     "title": "Đăng ký",
     "form": {
       "name": {
-        "label": "Tên",
-        "required": "Tên không được bỏ trống"
+        "label": "Tên"
       },
       "email": {
-        "label": "Email",
-        "required": "Email không được bỏ trống"
+        "label": "Email"
       },
       "password": {
-        "label": "Mật khẩu",
-        "required": "Mật khẩu không được bỏ trống"
+        "label": "Mật khẩu"
       },
       "confirmPassword": {
-        "label": "Nhập lại mật khẩu",
-        "required": "Confirm password is required"
+        "label": "Nhập lại mật khẩu"
       }
+    },
+    "signInLink": "Bạn đã có tài khoản? Đăng nhập ngay",
+    "btn": {
+      "signUp": "Đăng ký"
     }
   }
 }

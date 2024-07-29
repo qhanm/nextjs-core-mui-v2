@@ -1,9 +1,12 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material'
 import AuthLayout from 'layouts/auth'
+import { useTranslations } from 'next-intl'
 import SignUpForm from 'views/auth/sign-up-form'
 
-export default async function SignIn() {
+export default function SignIn() {
+  const t = useTranslations('signUp')
+
   return (
     <AuthLayout>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -21,7 +24,7 @@ export default async function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Sign up
+            {t('title')}
           </Typography>
           <Box sx={{ mt: 1 }}>
             <SignUpForm />
@@ -41,7 +44,7 @@ export default async function SignIn() {
             <Grid container>
               <Grid item>
                 <Link href='/auth/sign-in' variant='body2'>
-                  {'Do you already have an account?'}
+                  {t('signInLink')}
                 </Link>
               </Grid>
             </Grid>

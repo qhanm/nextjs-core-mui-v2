@@ -18,6 +18,10 @@ export default function GlobalStyles(theme: Theme) {
         position: 'fixed'
         // backgroundColor: theme.palette.primary.main
       }
-    }
+    },
+    'input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active':
+      {
+        WebkitBoxShadow: '0 0 0 30px white inset !important'
+      }
   }
 }

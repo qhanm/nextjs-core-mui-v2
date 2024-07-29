@@ -2,31 +2,33 @@
   "common": {
     "validation": {
       "required": "{name} is required",
-      "must-email": "{name} must is email"
+      "mustEmail": "This field must be an email",
+      "passwordInvalid": "Password must contain at least 1 uppercase letter, lowercase letter, number, special character, and be at least 6 characters long",
+      "passwordNotMatch": "Confirm password invalid"
     }
   },
   "home": {
     "title": "Home page"
   },
-  "sign-up": {
+  "signUp": {
     "title": "Sign Up",
     "form": {
       "name": {
-        "label": "Name",
-        "required": ":name is required"
+        "label": "Name"
       },
       "email": {
-        "label": "Email",
-        "required": "Email is required"
+        "label": "Email"
       },
       "password": {
-        "label": "Password",
-        "required": "Password is required"
+        "label": "Password"
       },
       "confirmPassword": {
-        "label": "Confirm password",
-        "required": "Confirm password is required"
+        "label": "Confirm password"
       }
+    },
+    "signInLink": "Do you already have an account?",
+    "btn": {
+      "signUp": "Sign Up"
     }
   }
 }
