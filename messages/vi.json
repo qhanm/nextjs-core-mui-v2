@@ -1,0 +1,32 @@
+{
+  "common": {
+    "validation": {
+      "required": "{name} Không được bỏ trống",
+      "must-email": "{name} phải là email"
+    }
+  },
+  "home": {
+    "title": "Home page"
+  },
+  "sign-up": {
+    "title": "Đăng ký",
+    "form": {
+      "name": {
+        "label": "Tên",
+        "required": "Tên không được bỏ trống"
+      },
+      "email": {
+        "label": "Email",
+        "required": "Email không được bỏ trống"
+      },
+      "password": {
+        "label": "Mật khẩu",
+        "required": "Mật khẩu không được bỏ trống"
+      },
+      "confirmPassword": {
+        "label": "Nhập lại mật khẩu",
+        "required": "Confirm password is required"
+      }
+    }
+  }
+}

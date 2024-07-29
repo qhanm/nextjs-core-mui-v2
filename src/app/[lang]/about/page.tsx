@@ -4,7 +4,6 @@ import ClientLayout from 'layouts/client'
 import Link from 'next/link'
 
 export default async function Home({ params: { lang } }) {
-  console.log('lang', lang)
   const data = await getData()
   return (
     <ClientLayout>

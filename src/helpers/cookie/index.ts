@@ -13,9 +13,6 @@ const getTheme = (): ITheme => {
 }
 
 const getLangue = () => {
-  console.log('check', {
-    has: cookies().has(LOCAL_KEY.LANG)
-  })
   if (cookies().has(LOCAL_KEY.LANG) && COMMON.LANGUAGES.includes(cookies().get(LOCAL_KEY.LANG).value)) {
     return cookies().get(LOCAL_KEY.LANG).value
   }

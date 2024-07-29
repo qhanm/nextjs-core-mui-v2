@@ -1,0 +1,32 @@
+{
+  "common": {
+    "validation": {
+      "required": "{name} is required",
+      "must-email": "{name} must is email"
+    }
+  },
+  "home": {
+    "title": "Home page"
+  },
+  "sign-up": {
+    "title": "Sign Up",
+    "form": {
+      "name": {
+        "label": "Name",
+        "required": ":name is required"
+      },
+      "email": {
+        "label": "Email",
+        "required": "Email is required"
+      },
+      "password": {
+        "label": "Password",
+        "required": "Password is required"
+      },
+      "confirmPassword": {
+        "label": "Confirm password",
+        "required": "Confirm password is required"
+      }
+    }
+  }
+}

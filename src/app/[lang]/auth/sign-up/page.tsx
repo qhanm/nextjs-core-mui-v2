@@ -1,11 +1,9 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material'
-import { getDictionary } from 'app/[lang]/dictionaries'
 import AuthLayout from 'layouts/auth'
 import SignUpForm from 'views/auth/sign-up-form'
 
-export default async function SignIn({ params: { lang } }) {
-  const dictionary = await getDictionary(lang)
+export default async function SignIn() {
   return (
     <AuthLayout>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -26,7 +24,7 @@ export default async function SignIn({ params: { lang } }) {
             Sign up
           </Typography>
           <Box sx={{ mt: 1 }}>
-            <SignUpForm dictionary={dictionary.signUp.form} />
+            <SignUpForm />
             {/* <CoreComponent.TextInput id='name' label='Fullname' margin='normal' required />
             <CoreComponent.TextInput id='email' label='Email' margin='normal' required />
             <Grid container spacing={{ md: 2, xs: 0 }}>
