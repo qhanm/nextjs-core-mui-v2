@@ -9,19 +9,19 @@ import { useRouter } from 'next/navigation'
 // ** Mui
 import TranslateIcon from '@mui/icons-material/Translate'
 import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
+import { LANGUAGE_ENUM } from 'enums'
 
 // ** Config
-import COMMON from 'configs/common'
 
 // ** Languages
 const settings = [
   {
     label: 'English',
-    value: COMMON.LANGUAGE.EN
+    value: LANGUAGE_ENUM.EN
   },
   {
     label: 'Việt Nam',
-    value: COMMON.LANGUAGE.VI
+    value: LANGUAGE_ENUM.VI
   }
 ]
 
@@ -33,10 +33,10 @@ export default function SwitchLanguage() {
     setAnchorElUser(event.currentTarget)
   }
   const handleChangeLanguage = lang => {
-    if (COMMON.LANGUAGES.includes(lang)) {
+    if (Object.values(LANGUAGE_ENUM).includes(lang)) {
       const paths = window.location.pathname.split('/')
 
-      if (paths.length > 1 && COMMON.LANGUAGES.includes(paths[1])) {
+      if (paths.length > 1 && Object.values(LANGUAGE_ENUM).includes(paths[1] as LANGUAGE_ENUM)) {
         paths[1] = lang
         router.push(paths.join('/'))
       }
