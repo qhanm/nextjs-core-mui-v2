@@ -1,8 +1,9 @@
 'use client'
 
 import axios, { AxiosError } from 'axios'
-import { ENVIRONMENT } from 'configs/environment'
-import { ReactNode, useEffect } from 'react'
+import Component from 'components'
+import { ENVIRONMENT } from 'configs'
+import { ReactNode, useEffect, useState } from 'react'
 
 const instanceAxios = axios.create({
   baseURL: ENVIRONMENT.API_URL + '/api',
@@ -11,6 +12,8 @@ const instanceAxios = axios.create({
 })
 
 const AxiosInterceptor = ({ children }: { children: ReactNode }) => {
+  const [serverError, setServerError] = useState(false)
+
   useEffect(() => {
     const reqInterceptor = instanceAxios.interceptors.request.use(async config => {
       return config
@@ -20,6 +23,10 @@ const AxiosInterceptor = ({ children }: { children: ReactNode }) => {
         return response
       },
       (error: AxiosError<any>) => {
+        if (error.response.status === 500) {
+          setServerError(true)
+        }
+
         return Promise.reject(error.response.data)
       }
     )
@@ -28,7 +35,26 @@ const AxiosInterceptor = ({ children }: { children: ReactNode }) => {
       instanceAxios.interceptors.response.eject(resInterceptor)
     }
   }, [])
-  return <>{children}</>
+
+  useEffect(() => {
+    if (serverError) {
+      setTimeout(() => {
+        setServerError(false)
+      }, 5000)
+    }
+  }, [serverError])
+
+  return (
+    <>
+      <Component.Alert
+        open={serverError}
+        setOpen={() => setServerError(false)}
+        description='An error occurred during processing, please try again later.'
+        title='Server Internal Error'
+      />
+      {children}
+    </>
+  )
 }
 
 export default instanceAxios

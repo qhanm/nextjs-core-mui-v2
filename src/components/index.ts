@@ -1,5 +1,5 @@
 import FormInputText from './form-text-input'
-
-const Component = { FormInputText }
+import CoreComponent from '@core/components'
+const Component = { FormInputText, ...CoreComponent }
 
 export default Component

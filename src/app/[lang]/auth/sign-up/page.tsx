@@ -1,6 +1,8 @@
 import AuthLayout from '@core/layouts/auth'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material'
+import { Avatar, Box, Grid, Paper, Typography } from '@mui/material'
+import Component from 'components'
+import { ROUTE_CONFIGS } from 'configs/route'
 import { useTranslations } from 'next-intl'
 import SignUpForm from 'views/auth/sign-up-form'
 
@@ -43,9 +45,7 @@ export default function SignIn() {
             </Button> */}
             <Grid container>
               <Grid item>
-                <Link href='/auth/sign-in' variant='body2'>
-                  {t('signInLink')}
-                </Link>
+                <Component.Link href={ROUTE_CONFIGS.AUTH.SIGN_IN}>{t('signInLink')}</Component.Link>
               </Grid>
             </Grid>
           </Box>

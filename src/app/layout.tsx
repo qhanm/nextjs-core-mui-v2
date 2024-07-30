@@ -23,6 +23,8 @@ import { THEME_ENUM } from 'enums/theme'
 import ThemeComponent from '@core/themes'
 import CoreComponent from '@core/components'
 import { LANGUAGE_ENUM } from 'enums'
+import Component from 'components'
+import StoreWrapper from 'hocs/StoreWrapper'
 
 const roboto = Roboto({
   weight: '400',
@@ -65,13 +67,15 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <AppRouterCacheProvider options={{ key: 'css' }}>
             <LoaderWrapper>
-              <AxiosInterceptor>
-                <SettingProvider setting={setting}>
-                  <ThemeComponent>
-                    <Suspense fallback={<CoreComponent.FallbackSpinner />}>{children}</Suspense>
-                  </ThemeComponent>
-                </SettingProvider>
-              </AxiosInterceptor>
+              <StoreWrapper>
+                <AxiosInterceptor>
+                  <SettingProvider setting={setting}>
+                    <ThemeComponent>
+                      <Suspense fallback={<CoreComponent.FallbackSpinner />}>{children}</Suspense>
+                    </ThemeComponent>
+                  </SettingProvider>
+                </AxiosInterceptor>
+              </StoreWrapper>
             </LoaderWrapper>
           </AppRouterCacheProvider>
         </NextIntlClientProvider>

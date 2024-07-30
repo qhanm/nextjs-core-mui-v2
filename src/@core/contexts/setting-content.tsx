@@ -1,7 +1,7 @@
 'use client'
 
 import { TRootSetting } from 'app/layout'
-import LOCAL_KEY from 'configs/storage'
+import { LOCAL_KEY } from 'configs'
 import { LANGUAGE_ENUM, THEME_ENUM } from 'enums'
 import { createContext, ReactNode, useState } from 'react'
 import Storage from 'utils/storage'

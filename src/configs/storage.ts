@@ -1,4 +1,4 @@
-const LOCAL_KEY = {
+export const LOCAL_KEY = {
   THEME: 'theme',
   LANG: 'lang'
 }

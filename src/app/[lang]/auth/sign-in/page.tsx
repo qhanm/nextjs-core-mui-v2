@@ -1,7 +1,9 @@
 import CoreComponent from '@core/components'
+import AuthLayout from '@core/layouts/auth'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { Avatar, Box, Button, FormControlLabel, Grid, Link, Paper, Typography } from '@mui/material'
-import AuthLayout from 'layouts/auth'
+import { Avatar, Box, Button, FormControlLabel, Grid, Paper, Typography } from '@mui/material'
+import Component from 'components'
+import { ROUTE_CONFIGS } from 'configs/route'
 
 export default function SignIn() {
   return (
@@ -33,14 +35,10 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href='#' variant='body2'>
-                  Forgot password?
-                </Link>
+                <Component.Link href={ROUTE_CONFIGS.AUTH.FORGOT_PASSWORD}>Forgot password?</Component.Link>
               </Grid>
               <Grid item>
-                <Link href='/auth/sign-up' variant='body2'>
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                <Component.Link href={ROUTE_CONFIGS.AUTH.SIGN_UP}>{"Don't have an account? Sign Up"}</Component.Link>
               </Grid>
             </Grid>
           </Box>
