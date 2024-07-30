@@ -1,6 +1,6 @@
 import { BoxProps } from '@mui/material/Box'
-import FallbackSpinner from 'components/fallback-spinner'
+import CoreComponent from 'components'
 
 export default function Loading({ sx }: { sx?: BoxProps['sx'] }) {
-  return <FallbackSpinner sx={sx} />
+  return <CoreComponent.FallbackSpinner sx={sx} />
 }

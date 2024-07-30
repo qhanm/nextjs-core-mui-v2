@@ -1,7 +1,7 @@
 'use client'
 
 import { TRootSetting } from 'app/layout'
-import FallbackSpinner from 'components/fallback-spinner'
+import FallbackSpinner from 'components/fallback-spinner/fallback-spinner'
 import COMMON from 'configs/common'
 import LOCAL_KEY from 'configs/storage'
 import THEME from 'configs/theme'

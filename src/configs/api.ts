@@ -1,5 +1,5 @@
 import { ENVIRONMENT } from './environment'
-
+console.log(ENVIRONMENT)
 export const BASE_URL = ENVIRONMENT.API_URL + '/api'
 
 export const API_ENDPOINT = {
