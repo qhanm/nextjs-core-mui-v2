@@ -9,7 +9,7 @@ import GlobalStyling from './global-styles'
 // ** React
 import React from 'react'
 import { createCustomTheme } from './custom-theme'
-import { SettingConsumer } from 'contexts/setting-content'
+import { SettingConsumer } from '@core/contexts/setting-content'
 
 type IProps = {
   children: React.ReactNode

@@ -1,32 +1,8 @@
+import { LANGUAGE_ENUM } from 'enums'
 import CookieHelper from 'helpers/cookie'
 import { NextResponse, NextRequest } from 'next/server'
 
-let locales = ['en', 'vi']
-
-function getLocale(request: NextRequest) {
-  const acceptLanguage = request.headers.get('Accept-Language')
-
-  let preferredLocale = 'en'
-
-  if (acceptLanguage) {
-    const languages = acceptLanguage.split(',').map(lang => lang.trim().split(';')[0])
-
-    for (let lang of languages) {
-      if (locales.includes(lang)) {
-        preferredLocale = lang
-        break
-      }
-
-      const languageCode = lang.split('-')[0]
-      if (locales.includes(languageCode)) {
-        preferredLocale = languageCode
-        break
-      }
-    }
-  }
-
-  return preferredLocale
-}
+let locales = Object.values(LANGUAGE_ENUM) as Array<LANGUAGE_ENUM>
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl

@@ -1,6 +1,4 @@
-enum THEME {
+export enum THEME_ENUM {
   LIGHT = 'light',
   DARK = 'dark'
 }
-
-export default THEME

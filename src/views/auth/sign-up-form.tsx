@@ -64,6 +64,8 @@ export default function SignUpForm() {
     mode: 'onBlur',
     resolver: yupResolver<any>(schema)
   })
+
+  // Handle submit sign up
   const onSubmit: SubmitHandler<TFormInputProps> = async data => {
     setLoading(true)
     try {

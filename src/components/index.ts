@@ -1,8 +1,5 @@
-import TextInput from './text-input'
-import Checkbox from './checkbox'
-import FallbackSpinner from './fallback-spinner'
-import Spinning from './spinning'
+import FormInputText from './form-text-input'
 
-const CoreComponent = { TextInput, Checkbox, FallbackSpinner, Spinning }
+const Component = { FormInputText }
 
-export default CoreComponent
+export default Component

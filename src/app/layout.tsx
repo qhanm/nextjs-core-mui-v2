@@ -7,7 +7,7 @@ import { Suspense } from 'react'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 
 // ** Context
-import { SettingProvider } from 'contexts/setting-content'
+import { SettingProvider } from '@core/contexts/setting-content'
 
 // ** Helper
 import { AxiosInterceptor } from 'helpers/axios'
@@ -15,15 +15,14 @@ import { AxiosInterceptor } from 'helpers/axios'
 // ** HOC
 import LoaderWrapper from 'hocs/LoaderWrapper'
 
-// ** Type
-import { ITheme } from 'types/common'
-
 import CookieHelper from 'helpers/cookie'
-import ThemeComponent from 'theme'
-import COMMON from 'configs/common'
 
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
+import { THEME_ENUM } from 'enums/theme'
+import ThemeComponent from '@core/themes'
+import CoreComponent from '@core/components'
+import { LANGUAGE_ENUM } from 'enums'
 
 const roboto = Roboto({
   weight: '400',
@@ -41,7 +40,7 @@ export async function generateStaticParams() {
 }
 
 export type TRootSetting = {
-  theme: ITheme
+  theme: THEME_ENUM
   language: 'vi' | 'en'
 }
 
@@ -57,7 +56,7 @@ export default async function RootLayout({
 
   let setting: TRootSetting = {
     theme: CookieHelper.getTheme(),
-    language: params?.lang ?? COMMON.LANGUAGE.VI
+    language: params?.lang ?? LANGUAGE_ENUM.VI
   }
 
   return (
@@ -69,7 +68,7 @@ export default async function RootLayout({
               <AxiosInterceptor>
                 <SettingProvider setting={setting}>
                   <ThemeComponent>
-                    <Suspense fallback={<>loading</>}>{children}</Suspense>
+                    <Suspense fallback={<CoreComponent.FallbackSpinner />}>{children}</Suspense>
                   </ThemeComponent>
                 </SettingProvider>
               </AxiosInterceptor>

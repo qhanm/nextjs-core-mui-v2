@@ -1,32 +1,29 @@
 'use client'
 
 import { TRootSetting } from 'app/layout'
-import FallbackSpinner from 'components/fallback-spinner/fallback-spinner'
-import COMMON from 'configs/common'
 import LOCAL_KEY from 'configs/storage'
-import THEME from 'configs/theme'
-import { createContext, ReactNode, useEffect, useState } from 'react'
-import { ITheme } from 'types/common'
+import { LANGUAGE_ENUM, THEME_ENUM } from 'enums'
+import { createContext, ReactNode, useState } from 'react'
 import Storage from 'utils/storage'
 
 type IValueContext = {
-  theme: ITheme
-  saveTheme: (theme: ITheme) => void
+  theme: THEME_ENUM
+  saveTheme: (theme: THEME_ENUM) => void
   language: string
 }
 
 const initialValuesContext: IValueContext = {
-  theme: THEME.LIGHT,
-  saveTheme: (theme: ITheme) => {},
-  language: COMMON.LANGUAGE.VI
+  theme: THEME_ENUM.LIGHT,
+  saveTheme: (theme: THEME_ENUM) => {},
+  language: LANGUAGE_ENUM.VI
 }
 
 export const SettingContext = createContext<IValueContext>({ ...initialValuesContext })
 
 export const SettingProvider = ({ children, setting }: { children: ReactNode; setting: TRootSetting }) => {
-  const [theme, setTheme] = useState<ITheme>(initialValuesContext.theme)
+  const [theme, setTheme] = useState<THEME_ENUM>(initialValuesContext.theme)
 
-  const saveTheme = (theme: ITheme) => {
+  const saveTheme = (theme: THEME_ENUM) => {
     setTheme(theme)
     Storage.setItem(LOCAL_KEY.THEME, theme)
   }
