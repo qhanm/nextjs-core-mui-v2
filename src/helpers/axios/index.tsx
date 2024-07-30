@@ -26,7 +26,6 @@ const AxiosInterceptor = ({ children }: { children: ReactNode }) => {
         if (error.response.status === 500) {
           setServerError(true)
         }
-
         return Promise.reject(error.response.data)
       }
     )

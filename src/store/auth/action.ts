@@ -4,7 +4,7 @@ import { TFormSignUp } from 'types/auth'
 
 export const serviceName = 'auth'
 
-export const signUp = createAsyncThunk(`${serviceName}/sign-up`, async (data: TFormSignUp) => {
+export const signUpAction = createAsyncThunk(`${serviceName}/sign-up`, async (data: TFormSignUp) => {
   const response = await AuthService.signUp(data)
   return response
 })

@@ -1,6 +1,6 @@
 'use client'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box, Grid, IconButton, InputAdornment } from '@mui/material'
+import { Alert, Box, Grid, IconButton, InputAdornment } from '@mui/material'
 import FormInputText from 'components/form-text-input'
 import { useTranslations } from 'next-intl'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -13,6 +13,12 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import { REGEX } from 'configs/regex'
 import { useState } from 'react'
 import { AuthService } from 'services/auth-service'
+import Component from 'components'
+import { useAppDispatch } from '@core/hooks/useAppDispatch'
+import { signUpAction } from 'store/auth/action'
+import { useAppSelector } from '@core/hooks/useAppSelector'
+import { RootState } from 'store'
+import { LOADING_STATUS_ENUM } from 'enums'
 
 type TFormInputProps = {
   name: string
@@ -29,6 +35,12 @@ const defaultValues: TFormInputProps = {
 }
 
 export default function SignUpForm() {
+  // Store
+  const { status, errorCode } = useAppSelector((state: RootState) => state.authReducer)
+
+  // Dispatch hook
+  const dispatch = useAppDispatch()
+
   // Translate
   const t = useTranslations('signUp')
   const common = useTranslations('common')
@@ -67,19 +79,15 @@ export default function SignUpForm() {
 
   // Handle submit sign up
   const onSubmit: SubmitHandler<TFormInputProps> = async data => {
-    setLoading(true)
-    try {
-      const res = await AuthService.signUp(data)
-      console.log(res)
-    } catch (err) {
-      console.log(err)
-    }
-    setLoading(false)
+    dispatch(signUpAction(data))
   }
-
+  console.log('error', errorCode)
   return (
     <>
       <Box>
+        <Component.Spinning open={status === LOADING_STATUS_ENUM.LOADING} />
+        {/* <Alert severity='success'>This is an info Alert.</Alert> */}
+
         <form autoComplete='off' onSubmit={handleSubmit(onSubmit)} noValidate>
           <FormInputText name='name' control={control} label={t('form.name.label')} />
           <FormInputText name='email' control={control} label={t('form.email.label')} />
