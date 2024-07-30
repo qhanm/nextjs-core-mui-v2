@@ -1,6 +1,6 @@
+import AuthLayout from '@core/layouts/auth'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material'
-import AuthLayout from 'layouts/auth'
 import { useTranslations } from 'next-intl'
 import SignUpForm from 'views/auth/sign-up-form'
 

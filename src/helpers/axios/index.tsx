@@ -1,6 +1,6 @@
 'use client'
 
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { ENVIRONMENT } from 'configs/environment'
 import { ReactNode, useEffect } from 'react'
 
@@ -12,16 +12,21 @@ const instanceAxios = axios.create({
 
 const AxiosInterceptor = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
-    // const reqInterceptor = instanceAxios.interceptors.request.use(async config => {
-    //   return config
-    // })
-    // const resInterceptor = instanceAxios.interceptors.response.use(response => {
-    //   return response
-    // })
-    // return () => {
-    //   instanceAxios.interceptors.request.eject(reqInterceptor)
-    //   instanceAxios.interceptors.response.eject(resInterceptor)
-    // }
+    const reqInterceptor = instanceAxios.interceptors.request.use(async config => {
+      return config
+    })
+    const resInterceptor = instanceAxios.interceptors.response.use(
+      response => {
+        return response
+      },
+      (error: AxiosError<any>) => {
+        return Promise.reject(error.response.data)
+      }
+    )
+    return () => {
+      instanceAxios.interceptors.request.eject(reqInterceptor)
+      instanceAxios.interceptors.response.eject(resInterceptor)
+    }
   }, [])
   return <>{children}</>
 }

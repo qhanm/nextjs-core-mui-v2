@@ -1,5 +1,5 @@
 import { InputProps, TextFieldProps } from '@mui/material'
-import TextInput from 'components/text-input'
+import TextInput from '@core/components/text-input'
 import { Control, Controller, FieldErrors, FieldPath, RegisterOptions } from 'react-hook-form'
 import { string } from 'yup'
 

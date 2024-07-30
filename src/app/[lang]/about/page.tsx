@@ -1,6 +1,6 @@
+import ClientLayout from '@core/layouts/client'
 import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
 import axios from 'axios'
-import ClientLayout from 'layouts/client'
 import Link from 'next/link'
 
 export default async function Home({ params: { lang } }) {

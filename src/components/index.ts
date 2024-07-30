@@ -1,5 +1,5 @@
-import TextInput from './text-input'
-import Checkbox from './checkbox'
-const CoreComponent = { TextInput, Checkbox }
+import FormInputText from './form-text-input'
 
-export default CoreComponent
+const Component = { FormInputText }
+
+export default Component

@@ -1,7 +1,7 @@
 // ** mui theme
 import { common } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
-import { ITheme } from 'types/common'
+import { THEME_ENUM } from 'enums/theme'
 
 // https://m2.material.io/inline-tools/color/
 const colorModes = {
@@ -34,7 +34,7 @@ const colorModes = {
   }
 }
 
-export const createCustomTheme = (mode: ITheme) => {
+export const createCustomTheme = (mode: THEME_ENUM) => {
   const colors = colorModes[mode]
 
   return createTheme({

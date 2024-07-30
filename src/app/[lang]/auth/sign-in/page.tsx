@@ -1,6 +1,6 @@
+import CoreComponent from '@core/components'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { Avatar, Box, Button, Checkbox, FormControlLabel, Grid, Link, Paper, Typography } from '@mui/material'
-import CoreComponent from 'components'
+import { Avatar, Box, Button, FormControlLabel, Grid, Link, Paper, Typography } from '@mui/material'
 import AuthLayout from 'layouts/auth'
 
 export default function SignIn() {

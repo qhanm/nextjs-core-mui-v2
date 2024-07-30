@@ -1,23 +1,27 @@
-import COMMON from 'configs/common'
 import LOCAL_KEY from 'configs/storage'
-import THEME from 'configs/theme'
+import { LANGUAGE_ENUM, THEME_ENUM } from 'enums'
 import { cookies } from 'next/headers'
-import { ITheme } from 'types/common'
 
-const getTheme = (): ITheme => {
-  if (cookies().has(LOCAL_KEY.THEME) && Object.values(THEME).includes(cookies().get(LOCAL_KEY.THEME).value as ITheme)) {
-    return cookies().get(LOCAL_KEY.THEME).value as ITheme
+const getTheme = (): THEME_ENUM => {
+  if (
+    cookies().has(LOCAL_KEY.THEME) &&
+    Object.values(THEME_ENUM).includes(cookies().get(LOCAL_KEY.THEME).value as THEME_ENUM)
+  ) {
+    return cookies().get(LOCAL_KEY.THEME).value as THEME_ENUM
   }
 
-  return THEME.LIGHT
+  return THEME_ENUM.LIGHT
 }
 
 const getLangue = () => {
-  if (cookies().has(LOCAL_KEY.LANG) && COMMON.LANGUAGES.includes(cookies().get(LOCAL_KEY.LANG).value)) {
+  if (
+    cookies().has(LOCAL_KEY.LANG) &&
+    Object.values(LANGUAGE_ENUM).includes(cookies().get(LOCAL_KEY.LANG).value as LANGUAGE_ENUM)
+  ) {
     return cookies().get(LOCAL_KEY.LANG).value
   }
 
-  return COMMON.LANGUAGE.VI
+  return LANGUAGE_ENUM.VI
 }
 
 const set = (key: string, value: any) => {
