@@ -71,6 +71,15 @@ export const createCustomTheme = (mode: THEME_ENUM) => {
       }
     },
     typography: {},
-    components: {}
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: '0.5rem',
+            height: '2.5rem'
+          }
+        }
+      }
+    }
   })
 }

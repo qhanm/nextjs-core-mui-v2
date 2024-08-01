@@ -1,12 +1,11 @@
-import { InputProps, TextFieldProps } from '@mui/material'
 import TextInput from '@core/components/text-input'
+import { TextFieldProps } from '@mui/material'
 import { Control, Controller, FieldErrors, FieldPath, RegisterOptions } from 'react-hook-form'
-import { string } from 'yup'
 
 type TFormInputProps<TFieldValues> = {
   name: string
   control: Control<any>
-  label: string
+  label?: string
   errors?: FieldErrors<TFieldValues>
   rules?: Omit<
     RegisterOptions<TFieldValues, FieldPath<TFieldValues>>,

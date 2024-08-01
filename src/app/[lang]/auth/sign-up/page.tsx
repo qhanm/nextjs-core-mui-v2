@@ -1,8 +1,6 @@
 import AuthLayout from '@core/layouts/auth'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { Avatar, Box, Grid, Paper, Typography } from '@mui/material'
-import Component from 'components'
-import { ROUTE_CONFIGS } from 'configs/route'
 import { useTranslations } from 'next-intl'
 import SignUpForm from 'views/auth/sign-up-form'
 
@@ -28,26 +26,8 @@ export default function SignIn() {
           <Typography component='h1' variant='h5'>
             {t('title')}
           </Typography>
-          <Box sx={{ mt: 1 }}>
+          <Box sx={{ mt: 1, width: '100%' }}>
             <SignUpForm />
-            {/* <CoreComponent.TextInput id='name' label='Fullname' margin='normal' required />
-            <CoreComponent.TextInput id='email' label='Email' margin='normal' required />
-            <Grid container spacing={{ md: 2, xs: 0 }}>
-              <Grid item xs={12} md={6}>
-                <CoreComponent.TextInput id='password' label='Password' margin='normal' required />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <CoreComponent.TextInput id='confirm_password' label='Confirm Password' margin='normal' required />
-              </Grid>
-            </Grid>
-            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-              Sign Up
-            </Button> */}
-            <Grid container>
-              <Grid item>
-                <Component.Link href={ROUTE_CONFIGS.AUTH.SIGN_IN}>{t('signInLink')}</Component.Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Grid>

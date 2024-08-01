@@ -3,7 +3,7 @@
 import { Button, Grid } from '@mui/material'
 import CoreComponent from 'components'
 import FormInputText from 'components/form-text-input'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 type TFormInputProps = {
   email: string

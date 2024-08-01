@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import TranslateIcon from '@mui/icons-material/Translate'
 import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import { LANGUAGE_ENUM } from 'enums'
+import { SwitchLanguageAction } from './action'
 
 // ** Config
 
@@ -32,11 +33,12 @@ export default function SwitchLanguage() {
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
-  const handleChangeLanguage = lang => {
+  const handleChangeLanguage = async lang => {
     if (Object.values(LANGUAGE_ENUM).includes(lang)) {
       const paths = window.location.pathname.split('/')
 
       if (paths.length > 1 && Object.values(LANGUAGE_ENUM).includes(paths[1] as LANGUAGE_ENUM)) {
+        await SwitchLanguageAction(lang)
         paths[1] = lang
         router.push(paths.join('/'))
       }

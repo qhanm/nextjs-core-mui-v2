@@ -1,33 +1,26 @@
 'use client'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Alert, Box, Grid, IconButton, InputAdornment } from '@mui/material'
+import { Box, Button, Grid, IconButton, InputAdornment, Stack } from '@mui/material'
 import FormInputText from 'components/form-text-input'
 import { useTranslations } from 'next-intl'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 // ** Mui Icon
+import { useAppDispatch } from '@core/hooks/useAppDispatch'
+import { useAppSelector } from '@core/hooks/useAppSelector'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
-import LoadingButton from '@mui/lab/LoadingButton'
-import { REGEX } from 'configs/regex'
-import { useState } from 'react'
-import { AuthService } from 'services/auth-service'
 import Component from 'components'
-import { useAppDispatch } from '@core/hooks/useAppDispatch'
-import { signUpAction } from 'store/auth/action'
-import { useAppSelector } from '@core/hooks/useAppSelector'
+import { REGEX } from 'configs/regex'
+import { ERROR_CODE_ENUM, LOADING_STATUS_ENUM } from 'enums'
+import { useState } from 'react'
 import { RootState } from 'store'
-import { LOADING_STATUS_ENUM } from 'enums'
+import { signUpAction } from 'store/auth/action'
+import { ROUTE_CONFIGS } from 'configs'
+import { TFormSignUp } from 'types/auth'
 
-type TFormInputProps = {
-  name: string
-  email: string
-  password: string
-  confirmPassword: string
-}
-
-const defaultValues: TFormInputProps = {
+const defaultValues: TFormSignUp = {
   email: 'qhnam.67@gmail.com',
   password: 'Nam123456!',
   confirmPassword: 'Nam123456!',
@@ -48,7 +41,6 @@ export default function SignUpForm() {
   // State
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   const handleToggleShowPassword = () => setShowPassword(!showPassword)
   const handleToggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
@@ -71,72 +63,83 @@ export default function SignUpForm() {
   })
 
   // Form hook
-  const { register, handleSubmit, control } = useForm<TFormInputProps>({
+  const { handleSubmit, control } = useForm<TFormSignUp>({
     defaultValues,
     mode: 'onBlur',
     resolver: yupResolver<any>(schema)
   })
 
   // Handle submit sign up
-  const onSubmit: SubmitHandler<TFormInputProps> = async data => {
+  const onSubmit: SubmitHandler<TFormSignUp> = async data => {
     dispatch(signUpAction(data))
   }
-  console.log('error', errorCode)
+
   return (
     <>
-      <Box>
-        <Component.Spinning open={status === LOADING_STATUS_ENUM.LOADING} />
-        {/* <Alert severity='success'>This is an info Alert.</Alert> */}
+      {errorCode === ERROR_CODE_ENUM.ACCOUNT_ALREADY_EXISTS ? (
+        <Component.OtpInput />
+      ) : (
+        <Box>
+          <Component.Spinning open={status === LOADING_STATUS_ENUM.LOADING} />
+          <Component.AlertInfo errorCode={errorCode} />
 
-        <form autoComplete='off' onSubmit={handleSubmit(onSubmit)} noValidate>
-          <FormInputText name='name' control={control} label={t('form.name.label')} />
-          <FormInputText name='email' control={control} label={t('form.email.label')} />
+          <form autoComplete='off' onSubmit={handleSubmit(onSubmit)} noValidate>
+            <FormInputText name='name' control={control} label={t('form.name.label')} />
+            <FormInputText name='email' control={control} label={t('form.email.label')} />
 
-          <Grid container spacing={{ md: 2, xs: 2.5 }} style={{ marginTop: 0 }}>
-            <Grid item xs={12} md={6}>
-              <FormInputText
-                name='password'
-                control={control}
-                label={t('form.password.label')}
-                inputProps={{
-                  type: showPassword ? 'text' : 'password',
-                  InputProps: {
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <IconButton edge='end' onClick={handleToggleShowPassword}>
-                          {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }
-                }}
-              />
+            <Grid container spacing={{ md: 2, xs: 2.5 }} style={{ marginTop: 0 }}>
+              <Grid item xs={12} md={6}>
+                <FormInputText
+                  name='password'
+                  control={control}
+                  label={t('form.password.label')}
+                  inputProps={{
+                    type: showPassword ? 'text' : 'password',
+                    InputProps: {
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <IconButton edge='end' onClick={handleToggleShowPassword}>
+                            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormInputText
+                  name='confirmPassword'
+                  control={control}
+                  label={t('form.confirmPassword.label')}
+                  inputProps={{
+                    type: showConfirmPassword ? 'text' : 'password',
+                    InputProps: {
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <IconButton edge='end' onClick={handleToggleShowConfirmPassword}>
+                            {showConfirmPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <FormInputText
-                name='confirmPassword'
-                control={control}
-                label={t('form.confirmPassword.label')}
-                inputProps={{
-                  type: showConfirmPassword ? 'text' : 'password',
-                  InputProps: {
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <IconButton edge='end' onClick={handleToggleShowConfirmPassword}>
-                          {showConfirmPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }
-                }}
-              />
+
+            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+              {t('btn.signUp')}
+            </Button>
+          </form>
+
+          <Grid container>
+            <Grid item>
+              <Component.Link href={ROUTE_CONFIGS.AUTH.SIGN_IN}>{t('signInLink')}</Component.Link>
             </Grid>
           </Grid>
-          <LoadingButton type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }} loading={loading}>
-            {t('btn.signUp')}
-          </LoadingButton>
-        </form>
-      </Box>
+        </Box>
+      )}
     </>
   )
 }
