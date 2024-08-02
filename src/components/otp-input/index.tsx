@@ -1,15 +1,42 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import LoadingButton from '@mui/lab/LoadingButton'
-import { Box, BoxProps, styled } from '@mui/material'
-import Component from 'components'
-import { useTranslations } from 'next-intl'
+'use client'
+
+// ** React
 import { useEffect, useState } from 'react'
+
+// ** Next
+import { useRouter } from 'next/navigation'
+
+// ** Redux
+import { useAppDispatch } from '@core/hooks/useAppDispatch'
+import { useAppSelector } from '@core/hooks/useAppSelector'
+import { RootState } from 'store'
+
+// ** React form
+import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { TOtpFormProps } from 'types/auth'
 import * as yup from 'yup'
 
+// ** Mui
+import LoadingButton from '@mui/lab/LoadingButton'
+import { Box, BoxProps, styled, Typography } from '@mui/material'
+
+// ** Component
+import Component from 'components'
+
+// ** Translation
+import { useTranslations } from 'next-intl'
+import { signUpResendOtp, signUpVerifyOtp } from 'store/auth/action'
+
+// ** Type
+import { TOtpFormProps } from 'types/auth'
+
+// ** Enum
+import { ROUTE_CONFIGS } from 'configs'
+import { LOADING_STATUS_ENUM } from 'enums'
+
 const defaultValues: TOtpFormProps = {
-  otp: ''
+  otp: '',
+  email: ''
 }
 
 const BoxStyled = styled(Box)<BoxProps>(({ theme }) => {
@@ -23,8 +50,15 @@ const BoxStyled = styled(Box)<BoxProps>(({ theme }) => {
   }
 })
 
-function ButtonCountDown() {
-  const COUNT_TIMER = 20
+function ButtonCountDown({ email }: { email: string }) {
+  const COUNT_TIMER = 10
+
+  const { resendStatus } = useAppSelector((state: RootState) => state.authReducer)
+
+  // Dispatch
+  const dispatch = useAppDispatch()
+
+  // State
   const [timer, setTimer] = useState(COUNT_TIMER)
   const [timeInterval, setTimeInterval] = useState(null)
   const [isResend, setIsResend] = useState(false)
@@ -37,14 +71,16 @@ function ButtonCountDown() {
     )
   }
 
-  //   const resetTimer = () => {
-  //     setTimer(COUNT_TIMER)
-  //     clearInterval(timeInterval)
-  //   }
-
   useEffect(() => {
     startTimer()
   }, [])
+
+  useEffect(() => {
+    if (resendStatus === LOADING_STATUS_ENUM.SUCCEEDED) {
+      setIsResend(false)
+      startTimer()
+    }
+  }, [resendStatus])
 
   useEffect(() => {
     if (timer <= 0) {
@@ -54,19 +90,34 @@ function ButtonCountDown() {
     }
   }, [timeInterval, timer])
 
+  const handleResendOtp = () => {
+    dispatch(signUpResendOtp({ email }))
+  }
+
   return (
     <LoadingButton
       variant='contained'
       type='submit'
       disabled={!isResend}
-      sx={{ width: `${isResend ? '100px' : '128px'}`, textTransform: 'none', transition: 'width 0.5s' }}
+      sx={{ width: `${isResend ? '100px' : '160px'}`, textTransform: 'none', transition: 'width 0.5s' }}
+      onClick={handleResendOtp}
+      loading={resendStatus === LOADING_STATUS_ENUM.LOADING}
     >
       {isResend ? 'Resend' : `${timer} Resend`}
     </LoadingButton>
   )
 }
 
-export default function OtpInput() {
+export default function OtpInput({ email }: { email: string }) {
+  // Router
+  const router = useRouter()
+
+  // Dispatch hook
+  const dispatch = useAppDispatch()
+
+  // Redux state
+  const { resendStatus, verifyOtpStatus } = useAppSelector((state: RootState) => state.authReducer)
+
   // Translate
   const t = useTranslations('common')
 
@@ -84,11 +135,39 @@ export default function OtpInput() {
 
   // Handle submit verify otp
   const onSubmit: SubmitHandler<TOtpFormProps> = async data => {
-    // dispatch(signUpAction(data))
+    dispatch(signUpVerifyOtp({ ...data, email }))
   }
+
+  useEffect(() => {
+    if (verifyOtpStatus === LOADING_STATUS_ENUM.SUCCEEDED) {
+      setTimeout(() => {
+        router.push(ROUTE_CONFIGS.AUTH.SIGN_IN)
+      }, 5000)
+    }
+  }, [verifyOtpStatus])
 
   return (
     <Box mt={4} sx={{ width: '100%' }}>
+      {resendStatus === LOADING_STATUS_ENUM.SUCCEEDED && (
+        <Box sx={{ marginBottom: 2 }}>
+          <Component.AlertInfo type='success' errorCode={'Send OTP success'} />
+        </Box>
+      )}
+
+      {verifyOtpStatus === LOADING_STATUS_ENUM.SUCCEEDED && (
+        <Box sx={{ marginBottom: 2 }}>
+          <Component.AlertInfo
+            type='success'
+            errorCode={
+              <Box>
+                <Typography>Verify account success</Typography>
+                <Component.Link href={ROUTE_CONFIGS.AUTH.SIGN_IN}>Go to sign in</Component.Link>
+              </Box>
+            }
+          />
+        </Box>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Box display='flex' flexDirection='column' gap={2}>
           <Box display='flex' alignItems='start' gap={1}>
@@ -96,12 +175,15 @@ export default function OtpInput() {
               <Component.FormInputText name='otp' control={control} />
             </BoxStyled>
 
-            {/* <LoadingButton variant='contained' sx={{ textTransform: 'none' }} type='submit'>
-              Resend
-            </LoadingButton> */}
-            <ButtonCountDown />
+            <ButtonCountDown email={email} />
           </Box>
-          <LoadingButton variant='contained' sx={{ textTransform: 'none' }} fullWidth type='submit'>
+          <LoadingButton
+            variant='contained'
+            sx={{ textTransform: 'none' }}
+            fullWidth
+            type='submit'
+            loading={verifyOtpStatus === LOADING_STATUS_ENUM.LOADING}
+          >
             Verify
           </LoadingButton>
         </Box>

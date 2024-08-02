@@ -63,7 +63,7 @@ export default function SignUpForm() {
   })
 
   // Form hook
-  const { handleSubmit, control } = useForm<TFormSignUp>({
+  const { handleSubmit, control, getValues } = useForm<TFormSignUp>({
     defaultValues,
     mode: 'onBlur',
     resolver: yupResolver<any>(schema)
@@ -77,7 +77,7 @@ export default function SignUpForm() {
   return (
     <>
       {errorCode === ERROR_CODE_ENUM.ACCOUNT_ALREADY_EXISTS ? (
-        <Component.OtpInput />
+        <Component.OtpInput email={getValues('email')} />
       ) : (
         <Box>
           <Component.Spinning open={status === LOADING_STATUS_ENUM.LOADING} />

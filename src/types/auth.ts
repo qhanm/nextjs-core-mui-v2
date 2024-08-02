@@ -7,4 +7,5 @@ export type TFormSignUp = {
 
 export type TOtpFormProps = {
   otp: string
+  email: string
 }

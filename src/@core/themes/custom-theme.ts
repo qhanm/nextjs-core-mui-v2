@@ -45,9 +45,9 @@ export const createCustomTheme = (mode: THEME_ENUM) => {
       },
       secondary: { main: colors.secondary },
       error: { main: colors.error },
-      warning: { main: colors.secondary },
-      info: { main: colors.secondary },
-      success: { main: colors.secondary },
+      warning: { main: colors.warning },
+      info: { main: colors.info },
+      success: { main: colors.success },
       grey: {
         50: '#FAFAFA',
         100: '#F5F5F5',
